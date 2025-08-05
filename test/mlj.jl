@@ -142,28 +142,36 @@ let
     @info "Evaluating $data"
     measure = auc
 
+    @info "First cancer test:"
     hyper = (; rng=_rng())
     e = _evaluate!(results, data, DecisionTreeClassifier, hyper; measure)
 
+    @info "2nd cancer test:"
     hyper = (;)
     e = _evaluate!(results, data, MultinomialClassifier, hyper; measure)
 
+    @info "3rd cancer test:"
     hyper = (;)
     acceleration = MLJBase.CPU1()
     e = _evaluate!(results, data, XGBoostClassifier, hyper; measure, acceleration)
 
+    @info "4th cancer test:"
     hyper = (; max_depth=2)
     e = _evaluate!(results, data, XGBoostClassifier, hyper; measure, acceleration)
 
+    @info "5th cancer test:"
     hyper = (; rng=_rng(), max_depth=2)
     e = _evaluate!(results, data, StableForestClassifier, hyper; measure)
 
+    @info "6th cancer test:"
     hyper = (; rng=_rng(), max_depth=2, max_rules=30)
     e = _evaluate!(results, data, StableRulesClassifier, hyper; measure)
 
+    @info "7th cancer test:"
     hyper = (; rng=_rng(), max_depth=2, max_rules=10)
     e = _evaluate!(results, data, StableRulesClassifier, hyper; measure)
 
+    @info "Last cancer test:"
     if get(ENV, "CAN_RUN_R_SIRUS", "false") == "true"
         hyper = (; max_depth=2, max_rules=10)
         e = _evaluate!(results, data, RSirusClassifier, hyper; measure, acceleration)
@@ -206,27 +214,34 @@ let
     @info "Evaluating $data"
     measure = accuracy
 
+    @info "First iris test:"
     hyper = (; rng=_rng())
     e = _evaluate!(results, data, DecisionTreeClassifier, hyper; measure)
 
+    @info "2nd iris test:"
     hyper = (;)
     e = _evaluate!(results, data, MultinomialClassifier, hyper; measure)
 
+    @info "3rd iris test:"
     hyper = (;)
     acceleration = MLJBase.CPU1()
     e = _evaluate!(results, data, XGBoostClassifier, hyper; measure, acceleration)
 
+    @info "4th iris test:"
     hyper = (; max_depth=2)
     e = _evaluate!(results, data, XGBoostClassifier, hyper; measure, acceleration)
 
+    @info "5th iris test:"
     hyper = (; rng=_rng(), max_depth=2)
     e = _evaluate!(results, data, StableForestClassifier, hyper; measure)
     @test 0.90 < _score(e)
 
+    @info "6th iris test:"
     lambda = 0.01
     hyper = (; rng=_rng(), max_depth=2, max_rules=30, lambda)
     e = _evaluate!(results, data, StableRulesClassifier, hyper; measure)
 
+    @info "Last iris test:"
     hyper = (; rng=_rng(), max_depth=2, max_rules=10, lambda)
     e = _evaluate!(results, data, StableRulesClassifier, hyper; measure)
     @test 0.62 < _score(e)
