@@ -118,7 +118,7 @@ metadata_model(
     input_scitype=Table(Continuous, Count),
     target_scitype=AbstractVector{<:Continuous},
     supports_weights=false,
-    path="SIRUS.StableRulesRegressor" # See comment at StableRulesClassifier path.
+    path="SIRUS.StableRulesRegressor" # See comment at StableRulesClassifier.
 )
 
 metadata_pkg.(
